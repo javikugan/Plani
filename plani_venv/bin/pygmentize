@@ -1,4 +1,4 @@
-#!/home/javikugan/Documents/Universidad/Plani/plani_venv/bin/python
+#!/home/javikugan/Documents/Universidad/Tercero/PlaniExt/Plani/plani_venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

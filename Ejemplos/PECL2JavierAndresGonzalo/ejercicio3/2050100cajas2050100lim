@@ -1,0 +1,52 @@
+(defproblem problem domain
+(
+	(DRON dron1)
+	(TRANSPORTADOR transportador1)
+	(TRANSPORTADOR transportador2)
+	(TRANSPORTADOR transportador3)
+	(LOCALIZACION deposito)
+	(LOCALIZACION loc1)
+	(LOCALIZACION loc2)
+	(LOCALIZACION loc3)
+	(CONTENIDO comida)
+	(CONTENIDO medicina)
+
+	(limite-transportador transportador1 20)
+	(limite-transportador transportador2 50)
+	(limite-transportador transportador3 100)
+	(capacidad-transportador transportador1 20)
+	(capacidad-transportador transportador2 50)
+	(capacidad-transportador transportador3 100)
+	(transportador-tiene transportador1 comida 0)
+	(transportador-tiene transportador1 medicina 0)
+	(transportador-tiene transportador2 comida 0)
+	(transportador-tiene transportador2 medicina 0)
+	(transportador-tiene transportador3 comida 0)
+	(transportador-tiene transportador3 medicina 0)
+
+	(dron-en dron1 deposito)
+
+	(transportador-en transportador1 deposito)
+	(transportador-en transportador2 deposito)
+	(transportador-en transportador3 deposito)
+
+	(loc-total-necesita loc1 20)
+	(loc-total-necesita loc2 50)
+	(loc-total-necesita loc3 100)
+	(loc-necesita loc1 comida 0)
+	(loc-necesita loc1 medicina 20)
+	(loc-necesita loc2 comida 44)
+	(loc-necesita loc2 medicina 6)
+	(loc-necesita loc3 comida 48)
+	(loc-necesita loc3 medicina 52)
+
+	(loc-tiene deposito comida 92)
+	(loc-tiene deposito medicina 78)
+
+	(dron-libre dron1)
+
+)
+(
+	(enviar-todo)
+)
+)

@@ -1,0 +1,324 @@
+Planificador,Tamaño,Tiempo (s),Acciones,Salida
+FF,2,0.0,8,"ith 30 relevant facts
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 37 states, to a max depth of 2
+               0.00 seconds total time
+
+
+"
+LPG-TD,2,0.06,9,"time:      0.01
+Search time:     0.01
+Actions:         9
+Duration:        9.000
+Plan quality:    9.000 
+Total Num Flips: 11
+     Plan file:       plan_drone_problem_d1_r1_l2_p2_c2_g2_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,2,0.0,8,"e
+ problem 'DRONE_PROBLEM_D1_R1_L2_P2_C2_G2_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l2_p2_c2_g2_ct2.pddl.soln
+
+
+"
+FF,3,0.0,12,"ith 44 relevant facts
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 87 states, to a max depth of 2
+               0.00 seconds total time
+
+
+"
+LPG-TD,3,0.06,12,"e:      0.02
+Search time:     0.01
+Actions:         12
+Duration:        12.000
+Plan quality:    12.000 
+Total Num Flips: 29
+     Plan file:       plan_drone_problem_d1_r1_l3_p3_c3_g3_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,3,0.0,12,"e
+ problem 'DRONE_PROBLEM_D1_R1_L3_P3_C3_G3_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l3_p3_c3_g3_ct2.pddl.soln
+
+
+"
+FF,4,0.01,16,"th 60 relevant facts
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 172 states, to a max depth of 3
+               0.00 seconds total time
+
+
+"
+LPG-TD,4,0.14,65,":      0.10
+Search time:     0.09
+Actions:         65
+Duration:        65.000
+Plan quality:    65.000 
+Total Num Flips: 123
+     Plan file:       plan_drone_problem_d1_r1_l4_p4_c4_g4_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,4,0.0,18,"e
+ problem 'DRONE_PROBLEM_D1_R1_L4_P4_C4_G4_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l4_p4_c4_g4_ct2.pddl.soln
+
+
+"
+FF,5,0.02,20,"th 78 relevant facts
+               0.00 seconds building connectivity graph
+               0.01 seconds searching, evaluating 287 states, to a max depth of 2
+               0.01 seconds total time
+
+
+"
+LPG-TD,5,0.08,20,"e:      0.04
+Search time:     0.03
+Actions:         20
+Duration:        20.000
+Plan quality:    20.000 
+Total Num Flips: 42
+     Plan file:       plan_drone_problem_d1_r1_l5_p5_c5_g5_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,5,0.01,23,"e
+ problem 'DRONE_PROBLEM_D1_R1_L5_P5_C5_G5_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l5_p5_c5_g5_ct2.pddl.soln
+
+
+"
+FF,6,0.04,24,"th 98 relevant facts
+               0.00 seconds building connectivity graph
+               0.03 seconds searching, evaluating 443 states, to a max depth of 2
+               0.03 seconds total time
+
+
+"
+LPG-TD,6,0.51,120,"    0.46
+Search time:     0.45
+Actions:         120
+Duration:        120.000
+Plan quality:    120.000 
+Total Num Flips: 252
+     Plan file:       plan_drone_problem_d1_r1_l6_p6_c6_g6_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,6,0.01,28,"e
+ problem 'DRONE_PROBLEM_D1_R1_L6_P6_C6_G6_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l6_p6_c6_g6_ct2.pddl.soln
+
+
+"
+FF,7,0.08,28,"h 120 relevant facts
+               0.00 seconds building connectivity graph
+               0.08 seconds searching, evaluating 841 states, to a max depth of 3
+               0.08 seconds total time
+
+
+"
+LPG-TD,7,0.16,36,"e:      0.12
+Search time:     0.10
+Actions:         36
+Duration:        36.000
+Plan quality:    36.000 
+Total Num Flips: 77
+     Plan file:       plan_drone_problem_d1_r1_l7_p7_c7_g7_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,7,0.02,30,"e
+ problem 'DRONE_PROBLEM_D1_R1_L7_P7_C7_G7_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l7_p7_c7_g7_ct2.pddl.soln
+
+
+"
+FF,8,0.14,32," 144 relevant facts
+               0.00 seconds building connectivity graph
+               0.13 seconds searching, evaluating 1114 states, to a max depth of 3
+               0.13 seconds total time
+
+
+"
+LPG-TD,8,2.13,232,"    2.08
+Search time:     2.05
+Actions:         232
+Duration:        232.000
+Plan quality:    232.000 
+Total Num Flips: 506
+     Plan file:       plan_drone_problem_d1_r1_l8_p8_c8_g8_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,8,0.03,36,"e
+ problem 'DRONE_PROBLEM_D1_R1_L8_P8_C8_G8_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l8_p8_c8_g8_ct2.pddl.soln
+
+
+"
+FF,9,0.2,36," 170 relevant facts
+               0.00 seconds building connectivity graph
+               0.19 seconds searching, evaluating 1669 states, to a max depth of 2
+               0.19 seconds total time
+
+
+"
+LPG-TD,9,0.88,80,":      0.84
+Search time:     0.80
+Actions:         80
+Duration:        80.000
+Plan quality:    80.000 
+Total Num Flips: 153
+     Plan file:       plan_drone_problem_d1_r1_l9_p9_c9_g9_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,9,0.02,40,"e
+ problem 'DRONE_PROBLEM_D1_R1_L9_P9_C9_G9_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l9_p9_c9_g9_ct2.pddl.soln
+
+
+"
+FF,10,0.43,40," 198 relevant facts
+               0.00 seconds building connectivity graph
+               0.42 seconds searching, evaluating 2586 states, to a max depth of 3
+               0.42 seconds total time
+
+
+"
+LPG-TD,10,25.31,203,"26
+Search time:     25.20
+Actions:         203
+Duration:        203.000
+Plan quality:    203.000 
+Total Num Flips: 1000
+     Plan file:       plan_drone_problem_d1_r1_l10_p10_c10_g10_ct2.pddl_1.SOL
+
+
+"
+SGPLAN40,10,0.04,45,"em 'DRONE_PROBLEM_D1_R1_L10_P10_C10_G10_CT2' defined
+
+
+
+
+
+Starting SGPlan search ...
+
+
+
+
+Starting SGPlan search ...
+
+Solution found.
+Answer file is drone_problem_d1_r1_l10_p10_c10_g10_ct2.pddl.soln
+
+
+"

@@ -1,0 +1,257 @@
+(defdomain ejercicio2 (
+
+    (:operator (!mover-dron ?d ?from ?to)
+        (;prec
+            (DRON ?d)
+            (LOCALIZACION ?to)
+            (LOCALIZACION ?from)
+            (dron-en ?d ?from)
+        )(;delete
+			(dron-en ?d ?from)
+		)(;add
+			(dron-en ?d ?to)
+		)
+        50
+    )
+
+	(:operator (!coger-contenido ?d ?ct ?l)
+		(;prec
+			(DRON ?d)
+			(CONTENIDO ?ct) 
+			(LOCALIZACION ?l) 
+			(dron-en ?d ?l) 
+			(loc-tiene ?l ?ct ?n)
+			(dron-libre ?d)
+		)
+		(;delete
+			(dron-libre ?d)
+			(loc-tiene ?l ?ct ?n)
+		)
+		(;add
+			(dron-tiene ?d ?ct)
+			(loc-tiene ?l ?ct (call - ?n 1))
+		)
+		0
+	)
+	
+	(:operator (!entregar-contenido ?d ?ct ?l)
+		(;prec
+			(DRON ?d)
+			(LOCALIZACION ?l)
+			(CONTENIDO ?ct)
+			(dron-en ?d ?l)
+			(dron-tiene ?d ?ct)
+			(loc-necesita ?l ?ct ?n)
+			(loc-total-necesita ?l ?m)
+		)
+		(;delete
+			(dron-tiene ?d ?ct)
+			(loc-necesita ?l ?ct ?n)
+			(loc-total-necesita ?l ?m)
+		)
+		(;add
+			(loc-necesita ?l ?ct (call - ?n 1))
+			(loc-total-necesita ?l (call - ?m 1))
+			(dron-libre ?d)
+		)
+		0
+	)
+	
+	(:operator (!mover-transportador ?d ?t ?from ?to)
+		(;prec
+			(DRON ?d)
+			(TRANSPORTADOR ?t)
+			(LOCALIZACION ?from)
+			(LOCALIZACION ?to)
+			(dron-en ?d ?from)
+			(transportador-en ?t ?from)
+			(limite-transportador ?t ?n)
+			(dron-libre ?d)
+		)
+		(;delete
+			(dron-en ?d ?from)
+			(transportador-en ?t ?from)
+		)
+		(;add
+			(dron-en ?d ?to)
+			(transportador-en ?t ?to)
+		)
+		(;coste
+			call + 50 (call / ?n 2)
+		)
+	)
+	
+	(:operator (!coger-de-transportador ?d ?t ?ct ?l)
+		(;prec
+			(DRON ?d)
+			(TRANSPORTADOR ?t)
+			(CONTENIDO ?ct)
+			(LOCALIZACION ?l)
+			(dron-en ?d ?l)
+			(transportador-en ?t ?l)
+			(transportador-tiene ?t ?ct ?n)
+			(capacidad-transportador ?t ?m)
+			(dron-libre ?d)
+			(call > ?n 0)
+		)
+		(;delete
+			(dron-libre ?d)
+			(transportador-tiene ?t ?ct ?n)
+			(capacidad-transportador ?t ?m)
+		)
+		(;add
+			(dron-tiene ?d ?ct)
+			(transportador-tiene ?t ?ct (call - ?n 1))
+			(capacidad-transportador ?t (call + ?m 1))
+		)
+		0
+	)
+	
+	(:operator (!dejar-en-transportador ?d ?t ?ct ?l)
+		(;prec
+			(DRON ?d)
+			(TRANSPORTADOR ?t)
+			(CONTENIDO ?ct)
+			(LOCALIZACION ?l)
+			(dron-en ?d ?l)
+			(transportador-en ?t ?l) 
+			(dron-tiene ?d ?ct)
+			(transportador-tiene ?t ?ct ?n)
+			(capacidad-transportador ?t ?m)
+		)
+		(;delete
+			(dron-tiene ?d ?ct)
+			(transportador-tiene ?t ?ct ?n)
+			(capacidad-transportador ?t ?m)
+		)
+		(;add
+			(dron-libre ?d)
+			(transportador-tiene ?t ?ct (call + ?n 1))
+			(capacidad-transportador ?t (call - ?m 1))
+		)
+		0
+	)
+	
+	;------------------------------------------------------------------------------------
+	; Metodo principal
+	(:method (realizar-entrega ?l ?n)
+		; Entrega directa por un solo dron
+		(
+			(dron-en ?d ?loc)
+			(call = 1 ?n)
+			(loc-necesita ?l ?ct ?m)
+			(call > ?m 0)
+		)
+		(
+			(!coger-contenido ?d ?ct ?loc)
+			(!mover-dron ?d ?loc ?l)
+			(!entregar-contenido ?d ?ct ?l)
+			(!mover-dron ?d ?l ?loc)
+		)
+		
+		; Entrega mediante transportador
+		(
+			(dron-en ?d ?loc)
+			(transportador-en ?t ?loc)
+		)
+		(
+			(cargar ?t ?l)
+			(!mover-transportador ?d ?t ?loc ?l)
+			(entregar ?t)
+			(!mover-transportador ?d ?t ?l ?loc)
+		)
+	)
+	
+	; Método para cargar contenido al transportador
+	(:method (cargar ?t ?l)
+		(
+			(dron-en ?d ?loc)
+			(loc-necesita ?l ?ct ?n)
+			(call > ?n 0)
+			(capacidad-transportador ?t ?capa)
+			(call > ?capa 0)
+			(transportador-tiene ?t ?ct ?m)
+			(call > ?n ?m)
+		)
+		(
+			(cargar-transportador ?ct ?n ?t)
+			(cargar ?t ?l)
+		)
+		
+		()
+		()
+	)
+	
+	; Método para entregar desde el transportador
+	(:method (entregar ?t)
+		(
+			(dron-en ?d ?l)
+			(loc-necesita ?l ?ct ?n)
+			(call > ?n 0)
+			(transportador-tiene ?t ?ct ?m)
+			(call > ?m 0)
+		)
+		(
+			(realizar-entrega ?d ?t ?ct ?m)
+			(entregar ?t)
+		)
+		
+		()
+		()
+	)
+	
+	; Método para que un dron realice múltiples entregas desde un transportador
+	(:method (realizar-entrega ?d ?t ?ct ?n)
+		(
+			(dron-en ?d ?l)
+			(capacidad-transportador ?t ?capa)
+			(limite-transportador ?t ?lim)
+			(call > ?n 0)
+			(call > ?lim ?capa)
+		)
+		(
+			(!coger-de-transportador ?d ?t ?ct ?l)
+			(!entregar-contenido ?d ?ct ?l)
+			(realizar-entrega ?d ?t ?ct (call - ?n 1))
+		)
+		
+		()
+		()
+	)
+	
+	; Método recursivo para cargar contenido en el transportador
+	(:method (cargar-transportador ?ct ?n ?t)
+		(
+			(dron-en ?d ?loc)
+			(loc-tiene ?loc ?ct ?restantes)
+			(call > ?restantes 0)
+			(capacidad-transportador ?t ?capa)
+			(call > ?capa 0)
+			(call > ?n 0)
+		)
+		(
+			(!coger-contenido ?d ?ct ?loc)
+			(!dejar-en-transportador ?d ?t ?ct ?loc)
+			(cargar-transportador ?ct (call - ?n 1) ?t)
+		)
+		
+		()
+		()
+	)
+	
+	; Método general para enviar todo el contenido necesario
+	(:method (enviar-todo)
+		(
+			(loc-total-necesita ?l ?n)
+			(call > ?n 0)
+		)
+		(
+			(realizar-entrega ?l ?n)
+			(enviar-todo)
+		)
+		
+		()
+		()
+	)
+	
+))

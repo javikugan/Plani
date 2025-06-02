@@ -14,10 +14,12 @@ from optparse import OptionParser
 import random
 import math
 import sys
+import os
 
 ########################################################################################
 # Hard-coded options
 ########################################################################################
+
 
 # Crates will have different contents, such as food and medicine.
 # You can change this to generate other contents if you want.
@@ -74,9 +76,7 @@ def setup_content_types(options):
         for x in range(len(content_types) - 1):
             types_after_this = len(content_types) - x - 1
             max_now = crates_left - types_after_this
-            # print x, types_after_this, crates_left, len(content_types), max_now
             num = random.randint(1, max_now)
-            # print num
             num_crates_with_contents.append(num)
             crates_left -= num
         num_crates_with_contents.append(crates_left)
@@ -92,11 +92,11 @@ def setup_content_types(options):
             # Done
             break
 
-    print()
-    print("Types\tQuantities")
-    for x in range(len(num_crates_with_contents)):
-        if num_crates_with_contents[x] > 0:
-            print(content_types[x] + "\t " + str(num_crates_with_contents[x]))
+    # print()
+    # print("Types\tQuantities")
+    # for x in range(len(num_crates_with_contents)):
+    #     if num_crates_with_contents[x] > 0:
+    #         print(content_types[x] + "\t " + str(num_crates_with_contents[x]))
 
     crates_with_contents = []
     counter = 1
@@ -118,7 +118,7 @@ def setup_location_coords(options):
     for x in range(1, options.locations + 1):
         location_coords.append((random.randint(1, 200), random.randint(1, 200)))
 
-    print("Location positions", location_coords)
+    # print("Location positions", location_coords)
     return location_coords
 
 
@@ -165,8 +165,14 @@ def main():
                       help='the number of crates assigned in the goal')
     parser.add_option('-k', '--capacity', metavar='NUM', type=int, dest='capacity', default=2,
                   help='maximum number of crates a drone can carry (default=2)')
+    parser.add_option('-v', '--verbosity', metavar='LEVEL', type=int, dest='verbosity', default=1,
+                  help='verbosity level: 0=silent, 1=normal, 2=debug (default=1)')
 
     (options, args) = parser.parse_args()
+
+    def vprint(level, *args, **kwargs):
+        if options.verbosity >= level:
+            print(*args, **kwargs)
 
     if options.drones is None:
         print("You must specify --drones (use --help for help)")
@@ -204,12 +210,12 @@ def main():
         print("For", options.persons, "persons, you can have at most", len(content_types) * options.persons, "goals")
         sys.exit(1)
 
-    print("Drones\t\t", options.drones)
-    print("Carriers\t", options.carriers)
-    print("Locations\t", options.locations)
-    print("Persons\t\t", options.persons)
-    print("Crates\t\t", options.crates)
-    print("Goals\t\t", options.goals)
+    vprint(1, "Drones\t\t", options.drones)
+    vprint(1, "Carriers\t", options.carriers)
+    vprint(1, "Locations\t", options.locations)
+    vprint(1, "Persons\t\t", options.persons)
+    vprint(1, "Crates\t\t", options.crates)
+    vprint(1, "Goals\t\t", options.goals)
 
     # Setup all lists of objects
 
@@ -263,9 +269,11 @@ def main():
     problem_name = "drone_problem_d" + str(options.drones) + "_r" + str(options.carriers) + \
                    "_l" + str(options.locations) + "_p" + str(options.persons) + "_c" + str(options.crates) + \
                    "_g" + str(options.goals) + "_ct" + str(len(content_types))
+    vprint(1, "Problem name:", problem_name)
 
-    # Open output file
-    with open(problem_name + ".pddl", 'w') as f:
+    output_dir = "Ejercicio1/Problemas"
+    os.makedirs(output_dir, exist_ok=True)
+    with open(f"{output_dir}/{problem_name}.pddl", 'w') as f:
         # Write the initial part of the problem
 
         f.write("(define (problem " + problem_name + ")\n")
@@ -357,7 +365,7 @@ def main():
 
         f.write("))\n")
         f.write(")\n")
-        print(f"Archivo de problema guardado en: {problem_name}.pddl")
+        
 
 
 if __name__ == '__main__':

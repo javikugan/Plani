@@ -8,17 +8,20 @@
         dron caja person - object
         location
         content
-        num
     )   
 
     (:predicates
         (at ?o - object ?l - location)
-        (en-dron ?c - caja ?d - dron)
+        (holding-left  ?d - dron ?c - caja)   
+        (holding-right ?d - dron ?c - caja)   
+        (left-free     ?d - dron)             
+        (right-free    ?d - dron)
+
+        ;;cajas
         (contenido-caja ?b - caja ?content - content)
         (person-needs ?p - person ?content - content)
         (person-has ?p - person ?content - content)
-        (cantidad-cajas-cargadas ?d - dron ?n - num)
-        (siguiente ?d - dron ?n1 ?n2 - num)
+        
 
 
     )
@@ -32,45 +35,70 @@
     )
 )
 
-    (:action cargar_dron
+    (:action cargar_left
         :parameters (
-            ?d - dron ?c - caja ?l - location ?n1 ?n2 - num
+            ?d - dron ?c - caja ?l - location 
         )
         :precondition (and 
             (at ?d ?l)
             (at ?c ?l)
-            (cantidad-cajas-cargadas ?d ?n1)
-            (siguiente ?d ?n1 ?n2) 
+            (left-free ?d)
             )       
         :effect (and
             (not (at ?c ?l))
-            (en-dron ?c ?d)
-            (not (cantidad-cajas-cargadas ?d ?n1))
-            (cantidad-cajas-cargadas ?d ?n2)    
+            (holding-left  ?d ?c)
+            (not (left-free ?d))   
         )
     )
-    (:action entregar   
+    (:action cargar_right
         :parameters (
-            ?p - person ?c - caja ?content - content ?l - location ?d - dron ?n1 ?n2 - num
+            ?d - dron ?c - caja ?l - location 
         )
         :precondition (and 
+            (at ?d ?l)
+            (at ?c ?l)
+            (right-free ?d)
+            )       
+        :effect (and
+            (not (at ?c ?l))
+            (holding-right  ?d ?c)
+            (not (right-free ?d))   
+        )
+    )
+    (:action entregar-left
+        :parameters (?p - person ?c - caja ?cnt - content ?l - location ?d - dron)
+        :precondition (and
             (at ?p ?l)
             (at ?d ?l)
-            (en-dron ?c ?d)
-            (cantidad-cajas-cargadas ?d ?n2)
-            (contenido-caja ?c ?content)
-            (person-needs ?p ?content)
-            (siguiente ?d ?n1 ?n2)
-
-        )       
+            (holding-left ?d ?c)
+            (contenido-caja ?c ?cnt)
+            (person-needs ?p ?cnt)
+        )
         :effect (and
-            (not (en-dron ?c ?d))
-            (person-has ?p ?content)
-            (not (person-needs ?p ?content))
-            (not (cantidad-cajas-cargadas ?d ?n2))
-            (cantidad-cajas-cargadas ?d ?n1) 
-            )
-    )
-    
+            ;; la pinza izquierda libera la caja
+            (not (holding-left ?d ?c))
+            (left-free ?d)
 
+            ;; la persona recibe el contenido
+            (person-has ?p ?cnt)
+            (not (person-needs ?p ?cnt))
+        )
+    )
+
+    (:action entregar-right
+        :parameters (?p - person ?c - caja ?cnt - content ?l - location ?d - dron)
+        :precondition (and
+            (at ?p ?l)
+            (at ?d ?l)
+            (holding-right ?d ?c)
+            (contenido-caja ?c ?cnt)
+            (person-needs ?p ?cnt)
+        )
+        :effect (and
+            (not (holding-right ?d ?c))
+            (right-free ?d)
+            (person-has ?p ?cnt)
+            (not (person-needs ?p ?cnt))
+        )
+    )
 )

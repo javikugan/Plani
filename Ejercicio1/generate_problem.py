@@ -103,6 +103,7 @@ def main():
     parser.add_option('-v', '--verbosity', metavar='LEVEL', type=int, dest='verbosity',
                       default=1, help='nivel de verbosidad: 0=silencioso, 1=normal, 2=debug')
 
+
     (options, args) = parser.parse_args()
 
     def vprint(level, *args, **kwargs):
@@ -170,7 +171,7 @@ def main():
     vprint(1, "Problem name:", problem_name)
 
     # Crear carpeta de salida si no existe
-    output_dir = "Ejercicio1/Problemas"
+    output_dir = "Problemas"
     os.makedirs(output_dir, exist_ok=True)
 
     with open(f"{output_dir}/{problem_name}.pddl", "w") as f:

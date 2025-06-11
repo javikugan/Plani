@@ -55,7 +55,7 @@
         (persona-tiene p1 comida)
         (persona-tiene p2 comida)
         (persona-tiene p3 comida)
-         (persona-tiene p4 comida)
+        (persona-tiene p4 comida)
 
     ))
 )

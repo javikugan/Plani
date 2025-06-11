@@ -1,0 +1,32 @@
+
+; Version LPG-td-1.4
+; Seed 68058620
+; Command line: /home/javikugan/Documents/Universidad/Tercero/PlaniExt/Plani/planificadores/lpg-td -n 1 -o /home/javikugan/Documents/Universidad/Tercero/PlaniExt/Plani/Ejercicio2/2_1/dron-domain.pddl -f /home/javikugan/Documents/Universidad/Tercero/PlaniExt/Plani/Ejercicio2/2_1/Problemas/drone_problem_d1_r1_l4_p4_c4_g4_ct2.pddl 
+; Problem /home/javikugan/Documents/Universidad/Tercero/PlaniExt/Plani/Ejercicio2/2_1/Problemas
+; Actions having STRIPS duration
+; Time 0.03
+; Search time 0.02
+; Parsing time 0.01
+; Mutex time 0.00
+; NrActions 20
+
+0:   (CARGAR_DRON DRON1 CRATE2 DEPOSITO) [1]
+1:   (MOVER-DRON DRON1 DEPOSITO LOC2) [1]
+2:   (MOVER-DRON DRON1 LOC2 LOC4) [1]
+3:   (ENTREGAR PERSON1 CRATE2 MEDICINA LOC4 DRON1) [1]
+4:   (MOVER-DRON DRON1 LOC4 DEPOSITO) [1]
+5:   (CARGAR_DRON DRON1 CRATE1 DEPOSITO) [1]
+6:   (MOVER-DRON DRON1 DEPOSITO LOC2) [1]
+7:   (MOVER-DRON DRON1 LOC2 LOC1) [1]
+8:   (ENTREGAR PERSON2 CRATE1 COMIDA LOC1 DRON1) [1]
+9:   (MOVER-DRON DRON1 LOC1 LOC4) [1]
+10:   (MOVER-DRON DRON1 LOC4 DEPOSITO) [1]
+11:   (CARGAR_DRON DRON1 CRATE3 DEPOSITO) [1]
+12:   (MOVER-DRON DRON1 DEPOSITO LOC2) [1]
+13:   (ENTREGAR PERSON4 CRATE3 MEDICINA LOC2 DRON1) [1]
+14:   (MOVER-DRON DRON1 LOC2 LOC4) [1]
+15:   (MOVER-DRON DRON1 LOC4 DEPOSITO) [1]
+16:   (CARGAR_DRON DRON1 CRATE4 DEPOSITO) [1]
+17:   (MOVER-DRON DRON1 DEPOSITO LOC4) [1]
+18:   (ENTREGAR PERSON3 CRATE4 MEDICINA LOC4 DRON1) [1]
+19:   (MOVER-DRON DRON1 LOC4 DEPOSITO) [1]

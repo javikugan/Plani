@@ -1,142 +1,153 @@
-;Dominio STRIPS
-
 (define (domain drone-domain)
     ; Requerimientos
     (:requirements :strips :typing)
     (:types
         object
-        dron caja person - object
+        dron caja person transportador - object  ; Corrección de jerarquía de tipos
         location
         content
         num
-        transportador
     )   
 
     (:predicates
-        
         ;; ubicación de drones, cajas, personas y transportadores
-        (at       ?o - object      ?l - location)
+        (at ?o - object ?l - location)
 
         ;; carga en dron
-        (en-dron               ?c - caja      ?d - dron)
-        (cantidad-cajas-cargadas ?d - dron     ?n - num)
-        (siguiente             ?d - dron      ?n1 - num    ?n2 - num)
+        (en-dron ?c - caja ?d - dron)
+        (brazo-libre ?d - dron)
 
         ;; carga en transportador
-        (cajas-en               ?t - transportador ?n - num)
-        (siguiente-t           ?t - transportador ?n1 - num    ?n2 - num)
-        (capacidad-maxima      ?t - transportador ?n - num)
+        (cajas-en ?t - transportador ?n - num)
+ (siguiente-t ?t - transportador ?n1 ?n2 - num)
+        (llevado-por ?d - dron ?t - transportador)
+
 
         ;; contenidos y necesidades
-        (contenido-caja        ?c - caja      ?t - content)
-        (person-needs          ?p - person    ?t - content)
-        (person-has            ?p - person    ?t - content)
-
+        (contenido-caja ?c - caja ?t - content)
+        (en-transportador ?c - caja ?t - transportador)
+        (person-needs ?p - person ?t - content)
+        (person-has ?p - person ?t - content)
     )
+
     ; Acciones
     (:action mover-dron
-    :parameters (?d - dron ?from - location ?to - location)
-    :precondition (at ?d ?from)
-    :effect (and
-        (not (at ?d ?from))
-        (at ?d ?to)
+        :parameters (?d - dron ?from - location ?to - location)
+        :precondition (at ?d ?from)
+        :effect (and
+            (not (at ?d ?from))
+            (at ?d ?to)
+        )
     )
-)
 
     (:action cargar_dron
-        :parameters (
-            ?d - dron ?c - caja ?l - location ?n1 ?n2 - num
-        )
+        :parameters (?d - dron ?c - caja ?l - location)
         :precondition (and 
             (at ?d ?l)
             (at ?c ?l)
-            (cantidad-cajas-cargadas ?d ?n1)
-            (siguiente ?d ?n1 ?n2) 
-            )       
+            (brazo-libre ?d)
+        )       
         :effect (and
             (not (at ?c ?l))
             (en-dron ?c ?d)
-            (not (cantidad-cajas-cargadas ?d ?n1))
-            (cantidad-cajas-cargadas ?d ?n2)    
+            (not (brazo-libre ?d))
         )
     )
+
     (:action entregar   
-        :parameters (
-            ?p - person ?c - caja ?content - content ?l - location ?d - dron ?n1 ?n2 - num
-        )
+        :parameters (?p - person ?c - caja ?content - content ?l - location ?d - dron)
         :precondition (and 
             (at ?p ?l)
             (at ?d ?l)
             (en-dron ?c ?d)
-            (cantidad-cajas-cargadas ?d ?n2)
             (contenido-caja ?c ?content)
             (person-needs ?p ?content)
-            (siguiente ?d ?n1 ?n2)
-
         )       
         :effect (and
             (not (en-dron ?c ?d))
             (person-has ?p ?content)
+            (brazo-libre ?d)
             (not (person-needs ?p ?content))
-            (not (cantidad-cajas-cargadas ?d ?n2))
-            (cantidad-cajas-cargadas ?d ?n1) 
-            )
-    )
-        ;; ------------------------------------------------------------------------
-    ;; 4) Poner caja en transportador
-    (:action poner-caja-en-transportador
-        :parameters (?d - dron ?t - transportador ?c - caja ?l - location
-                    ?n1 - num ?n2 - num)
-        :precondition (and
-        (at        ?d ?l)
-        (at        ?t ?l)
-        (at        ?c ?l)
-        (cantidad-cajas-cargadas ?d ?n1)     ;; dron libre para cargar
-        (siguiente               ?d ?n1 ?n2)
-        (cajas-en    ?t ?n1)                 ;; estado actual del transportador
-        (siguiente-t ?t ?n1 ?n2)
-        (capacidad-maxima ?t ?n2)            ;; no sobrepasa su capacidad
-        )
-        :effect (and
-        (not (at ?c ?l))
-        (cajas-en ?t ?n2)
-        (not (cajas-en ?t ?n1))
         )
     )
 
-    ;; ------------------------------------------------------------------------
-    ;; 5) Mover transportador (arrastrado por el dron)
+    (:action poner-caja-en-transportador
+        :parameters (?d - dron ?t - transportador ?c - caja ?l - location ?n1 ?n2 - num)
+        :precondition (and
+            (at ?d ?l)
+            (at ?t ?l)
+            (en-dron ?c ?d)
+            (cajas-en ?t ?n1)
+            (siguiente-t ?t ?n1 ?n2)
+        )
+        :effect (and
+            (not (en-dron ?c ?d))
+            (not (cajas-en ?t ?n1))
+            (cajas-en ?t ?n2)
+            (en-transportador ?c ?t )
+        )
+    )
+    (:action coger-transportador
+        :parameters (?d - dron ?t - transportador ?l - location)
+        :precondition (and
+            (at ?d ?l)
+            (at ?t ?l)
+            (brazo-libre ?d)
+        )
+        :effect (and
+            (not (brazo-libre ?d))
+            (not (at ?t ?l))
+            (llevado-por ?d ?t)
+        )
+    )
+    (:action dejar-transportador
+        :parameters (?d - dron ?t - transportador ?l - location)
+        :precondition (and
+            (at ?d ?l)
+            (llevado-por ?d ?t)
+        )
+        :effect (and
+            (brazo-libre ?d)
+            (not(llevado-por ?d ?t))
+            (at ?t ?l)
+
+        )
+    )
+
     (:action mover-transportador
         :parameters (?d - dron ?t - transportador ?from - location ?to - location)
         :precondition (and
-        (at ?d ?from)
-        (at ?t ?from)
+            (at ?d ?from)
+            (at ?t ?from)
+            (llevado-por ?d ?t)
+            
         )
         :effect (and
-        (not (at ?d ?from))
-        (at     ?d ?to)
-        (not (at ?t ?from))
-        (at     ?t ?to)
+            (not (at ?d ?from))
+            (at ?d ?to)
+            (not (at ?t ?from))
+            (at ?t ?to)
         )
     )
 
-    ;; ------------------------------------------------------------------------
-    ;; 6) Sacar caja del transportador
     (:action sacar-caja-del-transportador
-        :parameters (?d - dron ?t - transportador ?c - caja ?l - location
-                    ?n1 - num ?n2 - num)
+        :parameters (?d - dron ?t - transportador ?c - caja ?l - location ?n1 ?n2 - num)
         :precondition (and
-        (at        ?d ?l)
-        (at        ?t ?l)
-        (cajas-en  ?t ?n2)
-        (siguiente-t ?t ?n1 ?n2)
+            (at ?t ?l)
+            (at ?d ?l)
+            (en-transportador ?c ?t)
+            (cajas-en ?t ?n2)
+            (siguiente-t ?t ?n1 ?n2)
+            (brazo-libre ?d)
+
+
         )
         :effect (and
-        (not (cajas-en ?t ?n2))
-        (cajas-en     ?t ?n1)
-        (at           ?c ?l)
-        )
+            (not (cajas-en ?t ?n2))
+            (cajas-en ?t ?n1)
+            (not (en-transportador ?c ?t))
+            (en-dron ?c ?d)            
+            (not (brazo-libre ?d))
+            )
     )
-
-
 )

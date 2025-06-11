@@ -1,5 +1,6 @@
 (define (domain drone-domain)
     ; Requerimientos
+
     (:requirements :strips :typing)
     (:types
         object
@@ -19,7 +20,7 @@
 
         ;; carga en transportador
         (cajas-en ?t - transportador ?n - num)
- (siguiente-t ?t - transportador ?n1 ?n2 - num)
+        (siguiente-t ?t - transportador ?n1 ?n2 - num)
         (llevado-por ?d - dron ?t - transportador)
 
 

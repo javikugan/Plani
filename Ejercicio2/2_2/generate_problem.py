@@ -13,7 +13,7 @@ import random
 import math
 import sys
 import os
-
+folder_path = os.path.dirname(os.path.abspath(__file__))
 ########################################################################################
 # Hard-coded options
 ########################################################################################
@@ -112,23 +112,26 @@ def setup_person_needs(options, crates_with_contents):
 def main():
     parser = OptionParser(usage='python generator.py [-help] options...')
     parser.add_option('-d', '--drones', metavar='NUM', dest='drones',
-                      type=int, help='the number of drones')
+                      type=int,default=1, help='the number of drones')
     parser.add_option('-r', '--carriers', metavar='NUM', dest='carriers',
-                      type=int, help='the number of carriers, for later labs; use 0 for no carriers')
+                      type=int,default=1, help='the number of carriers, for later labs; use 0 for no carriers')
     parser.add_option('-l', '--locations', metavar='NUM', dest='locations',
-                      type=int, help='the number of locations apart from the depot')
+                      type=int,default=1, help='the number of locations apart from the depot')
     parser.add_option('-p', '--persons', metavar='NUM', dest='persons',
-                      type=int, help='the number of persons')
+                      type=int,default=1, help='the number of persons')
     parser.add_option('-c', '--crates', metavar='NUM', dest='crates',
-                      type=int, help='the number of crates available')
+                      type=int,default=3, help='the number of crates available')
     parser.add_option('-g', '--goals', metavar='NUM', dest='goals',
-                      type=int, help='the number of crates assigned in the goal')
-    parser.add_option('-k', '--capacity', metavar='NUM', dest='capacity',
-                      type=int, default=2, help='max number of crates a drone can carry (default=2)')
+                      type=int,default=2, help='the number of crates assigned in the goal')
+    parser.add_option('-T', '--carrier-capacity', metavar='NUM', dest='carrier_capacity',
+                      type=int, default=4, help='max number of crates a carrier can carry (default=4)')
     parser.add_option('-v', '--verbosity', metavar='LEVEL', dest='verbosity',
                       type=int, default=1, help='verbosity level: 0=silent, 1=normal, 2=debug (default=1)')
+    parser.add_option('-o', '--output', metavar='DIR', dest='output',
+                      type=str, default=folder_path + '/Problemas',
+                      help='directorio de salida para el archivo PDDL generado (default=Ejercicio2/Problemas)')
 
-    (options, args) = parser.parse_args()
+    options = parser.parse_args()[0]
 
     def vprint(level, *args, **kwargs):
         if options.verbosity >= level:
@@ -166,11 +169,13 @@ def main():
     person = [f"person{x+1}" for x in range(options.persons)]
     crate = [f"crate{x+1}" for x in range(options.crates)]
     location = ["deposito"] + [f"loc{x+1}" for x in range(options.locations)]
-    num_objects = [f"n{i}" for i in range(options.capacity + 1)]
+    max_dron_cap = 1
+    max_carrier_cap = options.carrier_capacity if options.carriers > 0 else 0
+    max_num = max(max_dron_cap, max_carrier_cap)
+    num_objects = [f"n{i}" for i in range(max_num + 1)]
 
     # Randomly assign each crate and person to some non-depot location
     locs_for_assignment = location[1:]  # all except "deposito"
-    crate_locations = {c: random.choice(locs_for_assignment) for c in crate}
     person_locations = {p: random.choice(locs_for_assignment) for p in person}
 
     # ----------------------------
@@ -199,11 +204,12 @@ def main():
     # ----------------------------
     # 6. Open and write the problem file
     # ----------------------------
-    output_dir = "Ejercicio2/Problemas"
+    output_dir = options.output
     os.makedirs(output_dir, exist_ok=True)
     problem_path = f"{output_dir}/{problem_name}.pddl"
 
     with open(problem_path, 'w') as f:
+        vprint(1, f"debug: writing to {problem_path}")
         # ---- define problem and domain ----
         f.write(f"(define (problem {problem_name})\n")
         f.write("  (:domain drone-domain)\n")
@@ -213,7 +219,7 @@ def main():
         for x in drone:
             f.write(f"    {x} - dron\n")
         for x in carrier:
-+            f.write(f"    {x} - transportador\n")
+            f.write(f"    {x} - transportador\n")
         for x in location:
             f.write(f"    {x} - location\n")
         for x in crate:
@@ -238,7 +244,7 @@ def main():
 
         # 6.3 All crates are at their randomly assigned locations
         for c in crate:
-            loc = crate_locations[c]
+            loc = "deposito"
             f.write(f"    (at {c} {loc})\n")
 
         # 6.4 Relate each crate to its content
@@ -259,37 +265,29 @@ def main():
                     person_name = person[pi]
                     content_name = content_types[ci]
                     f.write(f"    (person-needs {person_name} {content_name})\n")
-
+        vprint(1, f"debug: person needs: {need}")
         # 6.7 Numerical helpers: linking n0→n1, n1→n2, … up to capacity
         for d in drone:
-            for i in range(options.capacity):
-                f.write(f"    (siguiente {d} n{i} n{i+1})\n")
-            # initially, each drone carries 0 crates:
-            f.write(f"    (cantidad-cajas-cargadas {d} n0)\n")
-        
+            f.write(f"    (brazo-libre {d})\n")
+            
         # 6.8 Numérico para transportadores: n0→n1 … →nK, están vacíos y fijamos capacidad
         for t in carrier:
-            for i in range(options.capacity):
+            for i in range(options.carrier_capacity):
                 f.write(f"    (siguiente-t {t} n{i} n{i+1})\n")
             # empieza vacío
-            f.write(f"    (cajas-en {t} n0)\n")            # capacidad máxima = n{options.capacity}
-            f.write(f"    (capacidad-maxima {t} n{options.capacity})\n")
+            f.write(f"    (cajas-en {t} n0)\n")
+          
+            
+        f.write("\t(= (total-cost) 0 )\n")
 
-
-        # 6.8 Initialize total-cost to 0
-        f.write("    (= (total-cost) 0)\n")
-
-        # 6.9 Initialize fly-cost for every pair of locations
-        #
-        #     We have `location_coords` indexed the same as `location` list:
-        #       index 0 → “deposito”, index 1 → “loc1”, etc.
-        n_locations = len(location)  # this equals options.locations + 1
-        for i in range(n_locations):
-            for j in range(n_locations):
-                cost_ij = flight_cost(location_coords, i, j)
-                from_loc = location[i]
-                to_loc = location[j]
-                f.write(f"    (= (fly-cost {from_loc} {to_loc}) {cost_ij})\n")
+        for i,loc1 in enumerate(location):
+            for j,loc2 in enumerate(location):
+                if i!=j:
+                    coste = flight_cost(location_coords, i, j)
+                else:
+                    coste = 0
+                f.write("\t(= (fly-cost "+ loc1 + " " + loc2 + ") "+ str(coste) + ")\n")
+            
 
         f.write("  )\n\n")  # end of :init
 
@@ -306,14 +304,19 @@ def main():
                     person_name = person[pi]
                     content_name = content_types[ci]
                     f.write(f"    (person-has {person_name} {content_name})\n")
+        # Transportadores deben estar en el depósito
+        for t in carrier:
+            f.write(f"    (at {t} deposito)\n")
         f.write("  ))\n\n")
 
-        # 8. Metric: minimize total-cost
-        f.write("  (:metric minimize (total-cost))\n")
+
+        f.write("   (:metric minimize (total-cost))\n\n")
 
         f.write(")\n")  # end of define
 
     vprint(1, f"Generated problem with action‐costs: {problem_path}")
+    # print(f"Archivo PDDL generado en: {problem_path}")
 
 if __name__ == '__main__':
     main()
+    

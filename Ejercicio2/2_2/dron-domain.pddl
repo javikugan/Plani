@@ -1,6 +1,5 @@
 (define (domain drone-domain)
-    ; Requerimientos
-    (:requirements :strips :typing)
+    (:requirements :strips :typing :action-costs)
     (:types
         object
         dron caja person transportador - object  ; Corrección de jerarquía de tipos
@@ -8,6 +7,11 @@
         content
         num
     )   
+
+    (:functions
+        (total-cost)            ; Coste acumulado del plan
+        (fly-cost ?from ?to - location)  ; Coste específico entre localizaciones
+    )
 
     (:predicates
         ;; ubicación de drones, cajas, personas y transportadores
@@ -19,7 +23,7 @@
 
         ;; carga en transportador
         (cajas-en ?t - transportador ?n - num)
- (siguiente-t ?t - transportador ?n1 ?n2 - num)
+        (siguiente-t ?t - transportador ?n1 ?n2 - num)
         (llevado-por ?d - dron ?t - transportador)
 
 
@@ -37,7 +41,8 @@
         :effect (and
             (not (at ?d ?from))
             (at ?d ?to)
-        )
+            (increase (total-cost) (fly-cost ?from ?to))
+            )
     )
 
     (:action cargar_dron
@@ -51,6 +56,7 @@
             (not (at ?c ?l))
             (en-dron ?c ?d)
             (not (brazo-libre ?d))
+            (increase (total-cost) 1)  ; Incremento de coste al cargar
         )
     )
 
@@ -68,6 +74,7 @@
             (person-has ?p ?content)
             (brazo-libre ?d)
             (not (person-needs ?p ?content))
+            (increase (total-cost) 1)  ; Incremento de coste al entregar
         )
     )
 
@@ -85,6 +92,9 @@
             (not (cajas-en ?t ?n1))
             (cajas-en ?t ?n2)
             (en-transportador ?c ?t )
+            (increase (total-cost) 1)  ; Incremento de coste al poner en transportador
+        
+            
         )
     )
     (:action coger-transportador
@@ -98,6 +108,8 @@
             (not (brazo-libre ?d))
             (not (at ?t ?l))
             (llevado-por ?d ?t)
+            (increase (total-cost) 1) ;
+            
         )
     )
     (:action dejar-transportador
@@ -110,7 +122,7 @@
             (brazo-libre ?d)
             (not(llevado-por ?d ?t))
             (at ?t ?l)
-
+            (increase (total-cost) 1)
         )
     )
 
@@ -127,6 +139,7 @@
             (at ?d ?to)
             (not (at ?t ?from))
             (at ?t ?to)
+            (increase (total-cost) (fly-cost ?from ?to))
         )
     )
 
@@ -148,6 +161,7 @@
             (not (en-transportador ?c ?t))
             (en-dron ?c ?d)            
             (not (brazo-libre ?d))
+            (increase (total-cost) 1)  ; Incremento de coste al sacar del transportador
             )
     )
 )

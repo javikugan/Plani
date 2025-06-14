@@ -1,0 +1,13 @@
+{
+  "defaultDomain": "dron_domain.pddl",
+  "defaultOptions": "",
+  "cases": [
+    {
+      "problem": "Problemas/1dron.pddl",
+      "expectedPlans": [
+        "1dron.pddl_2025-06-14T16-25-13.841Z.plan",
+        "1dron.pddl_2025-06-14T16-34-37.971Z.plan"
+      ]
+    }
+  ]
+}

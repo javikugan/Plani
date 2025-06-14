@@ -56,7 +56,6 @@
             (not (at ?c ?l))
             (en-dron ?c ?d)
             (not (brazo-libre ?d))
-            (increase (total-cost) 1)  ; Incremento de coste al cargar
         )
     )
 
@@ -74,7 +73,6 @@
             (person-has ?p ?content)
             (brazo-libre ?d)
             (not (person-needs ?p ?content))
-            (increase (total-cost) 1)  ; Incremento de coste al entregar
         )
     )
 
@@ -92,7 +90,6 @@
             (not (cajas-en ?t ?n1))
             (cajas-en ?t ?n2)
             (en-transportador ?c ?t )
-            (increase (total-cost) 1)  ; Incremento de coste al poner en transportador
         
             
         )
@@ -108,7 +105,6 @@
             (not (brazo-libre ?d))
             (not (at ?t ?l))
             (llevado-por ?d ?t)
-            (increase (total-cost) 1) ;
             
         )
     )
@@ -122,7 +118,6 @@
             (brazo-libre ?d)
             (not(llevado-por ?d ?t))
             (at ?t ?l)
-            (increase (total-cost) 1)
         )
     )
 
@@ -161,7 +156,6 @@
             (not (en-transportador ?c ?t))
             (en-dron ?c ?d)            
             (not (brazo-libre ?d))
-            (increase (total-cost) 1)  ; Incremento de coste al sacar del transportador
             )
     )
 )

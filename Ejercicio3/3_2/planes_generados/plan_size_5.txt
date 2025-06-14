@@ -1,0 +1,35 @@
+Number of literals: 114
+Constructing lookup tables: [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+Post filtering unreachable actions:  [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+[01;34mNo analytic limits found, not considering limit effects of goal-only operators[00m
+23% of the ground temporal actions in this problem are compression-safe
+Initial heuristic = 15.000, admissible cost estimate 0.000
+
+Resorting to best-first search
+Running WA* with W = 5.000, not restarting with goal states
+b (14.000 | 76.001)b (14.000 | 40.002)b (13.000 | 76.001)b (12.000 | 78.002)b (11.000 | 250.003)b (10.000 | 251.004)b (10.000 | 251.003)b (9.000 | 251.004)b (8.000 | 424.004)b (7.000 | 424.004)b (6.000 | 424.004)b (5.000 | 424.004)b (4.000 | 459.009)b (3.000 | 632.010)b (3.000 | 599.008)b (2.000 | 632.010)b (1.000 | 632.010)(G);;;; Solution Found
+; States evaluated: 2903
+; Cost: 772.009
+; Time 4.73
+0.000: (cargar-dron dron1 crate2 deposito)  [1.000]
+0.000: (mover-dron dron2 deposito loc2)  [38.000]
+1.001: (mover-dron dron1 deposito loc2)  [38.000]
+38.001: (mover-dron dron2 loc2 deposito)  [38.000]
+39.002: (entregar person2 crate2 comida loc2 dron1)  [1.000]
+40.003: (mover-dron dron1 loc2 deposito)  [38.000]
+76.002: (cargar-dron dron2 crate5 deposito)  [1.000]
+77.003: (mover-dron dron2 deposito loc4)  [173.000]
+78.004: (cargar-dron dron1 crate1 deposito)  [1.000]
+79.005: (mover-dron dron1 deposito loc5)  [102.000]
+181.006: (entregar person4 crate1 comida loc5 dron1)  [1.000]
+182.007: (mover-dron dron1 loc5 deposito)  [102.000]
+250.004: (entregar person5 crate5 medicina loc4 dron2)  [1.000]
+251.005: (mover-dron dron2 loc4 deposito)  [173.000]
+284.008: (cargar-dron dron1 crate3 deposito)  [1.000]
+285.009: (mover-dron dron1 deposito loc4)  [173.000]
+424.006: (cargar-dron dron2 crate4 deposito)  [1.000]
+425.007: (mover-dron dron2 deposito loc4)  [173.000]
+458.010: (entregar person5 crate3 comida loc4 dron1)  [1.000]
+459.011: (mover-dron dron1 loc4 deposito)  [173.000]
+598.008: (entregar person1 crate4 comida loc4 dron2)  [1.000]
+599.009: (mover-dron dron2 loc4 deposito)  [173.000]

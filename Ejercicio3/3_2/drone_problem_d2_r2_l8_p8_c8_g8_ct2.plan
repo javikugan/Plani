@@ -1,0 +1,41 @@
+;;!domain: drone-domain
+;;!problem: drone_problem_d2_r2_l8_p8_c8_g8_ct2
+
+0.00000: (cargar-dron dron1 crate7 deposito) [1.00000]
+0.00000: (mover-dron dron2 deposito loc7) [93.00000]
+1.00100: (mover-dron dron1 deposito loc3) [192.00000]
+93.00100: (mover-dron dron2 loc7 deposito) [93.00000]
+186.00200: (cargar-dron dron2 crate6 deposito) [1.00000]
+187.00300: (mover-dron dron2 deposito loc7) [93.00000]
+193.00200: (entregar person3 crate7 medicina loc3 dron1) [1.00000]
+194.00300: (mover-dron dron1 loc3 deposito) [192.00000]
+280.00400: (entregar person8 crate6 medicina loc7 dron2) [1.00000]
+281.00500: (mover-dron dron2 loc7 deposito) [93.00000]
+374.00600: (cargar-dron dron2 crate1 deposito) [1.00000]
+375.00700: (mover-dron dron2 deposito loc7) [93.00000]
+386.00400: (cargar-dron dron1 crate8 deposito) [1.00000]
+387.00500: (mover-dron dron1 deposito loc2) [187.00000]
+468.00800: (entregar person7 crate1 comida loc7 dron2) [1.00000]
+469.00900: (mover-dron dron2 loc7 deposito) [93.00000]
+562.01000: (cargar-dron dron2 crate2 deposito) [1.00000]
+563.01100: (mover-dron dron2 deposito loc1) [64.00000]
+574.00600: (entregar person6 crate8 medicina loc2 dron1) [1.00000]
+627.01200: (entregar person5 crate2 comida loc1 dron2) [1.00000]
+628.01300: (mover-dron dron2 loc1 deposito) [64.00000]
+635.01700: (mover-dron dron1 loc2 deposito) [187.00000]
+692.01400: (cargar-dron dron2 crate3 deposito) [1.00000]
+693.01500: (mover-dron dron2 deposito loc2) [187.00000]
+822.01800: (cargar-dron dron1 crate4 deposito) [1.00000]
+823.01900: (mover-dron dron1 deposito loc2) [187.00000]
+880.01600: (entregar person6 crate3 comida loc2 dron2) [1.00000]
+881.01700: (mover-dron dron2 loc2 deposito) [187.00000]
+1010.02000: (entregar person4 crate4 comida loc2 dron1) [1.00000]
+1011.02100: (mover-dron dron1 loc2 deposito) [187.00000]
+1068.01800: (cargar-dron dron2 crate5 deposito) [1.00000]
+1069.01900: (mover-dron dron2 deposito loc1) [64.00000]
+1133.02000: (entregar person1 crate5 comida loc1 dron2) [1.00000]
+1134.02100: (mover-dron dron2 loc1 deposito) [64.00000]
+
+; Makespan: 1198.021
+; Metric: 1198.021
+; States evaluated: 33342

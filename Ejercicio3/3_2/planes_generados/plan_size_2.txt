@@ -1,0 +1,21 @@
+Number of literals: 54
+Constructing lookup tables: [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+Post filtering unreachable actions:  [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
+[01;34mNo analytic limits found, not considering limit effects of goal-only operators[00m
+30% of the ground temporal actions in this problem are compression-safe
+Initial heuristic = 7.000, admissible cost estimate 0.000
+
+Resorting to best-first search
+Running WA* with W = 5.000, not restarting with goal states
+b (6.000 | 105.001)b (5.000 | 106.002)b (5.000 | 106.001)b (4.000 | 106.002)b (3.000 | 210.003)b (2.000 | 210.003)b (1.000 | 210.003)(G);;;; Solution Found
+; States evaluated: 191
+; Cost: 210.003
+; Time 0.11
+0.000: (cargar-dron dron1 crate1 deposito)  [1.000]
+0.000: (cargar-dron dron2 crate2 deposito)  [1.000]
+1.001: (mover-dron dron1 deposito loc1)  [104.000]
+1.001: (mover-dron dron2 deposito loc1)  [104.000]
+105.002: (entregar person1 crate1 comida loc1 dron1)  [1.000]
+105.002: (entregar person1 crate2 medicina loc1 dron2)  [1.000]
+106.003: (mover-dron dron1 loc1 deposito)  [104.000]
+106.003: (mover-dron dron2 loc1 deposito)  [104.000]

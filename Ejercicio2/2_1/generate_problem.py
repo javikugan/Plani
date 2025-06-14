@@ -294,15 +294,7 @@ def main():
                     person_name = person[pi]
                     content_name = content_types[ci]
                     f.write(f"    (person-has {person_name} {content_name})\n")
-        f.write("\t(= (total-cost) 0 )\n")
 
-        for i,loc1 in enumerate(location):
-            for j,loc2 in enumerate(location):
-                if i!=j:
-                    coste = flight_cost(location_coords, i, j)
-                else:
-                    coste = 0
-                f.write("\t(= (fly-cost "+ loc1 + " " + loc2 + ") "+ str(coste) + ")\n")
         f.write("  ))\n\n")
 
         f.write(")\n")  # end of define

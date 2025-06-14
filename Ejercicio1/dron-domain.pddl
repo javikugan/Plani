@@ -21,9 +21,6 @@
         (contenido-caja ?b - caja ?content - content)
         (person-needs ?p - person ?content - content)
         (person-has ?p - person ?content - content)
-        
-
-
     )
     ; Acciones
     (:action mover-drone

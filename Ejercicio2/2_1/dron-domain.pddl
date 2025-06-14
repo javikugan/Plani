@@ -1,6 +1,4 @@
 (define (domain drone-domain)
-    ; Requerimientos
-
     (:requirements :strips :typing)
     (:types
         object
@@ -9,6 +7,8 @@
         content
         num
     )   
+
+
 
     (:predicates
         ;; ubicación de drones, cajas, personas y transportadores
@@ -32,6 +32,7 @@
     )
 
     ; Acciones
+  
     (:action mover-dron
         :parameters (?d - dron ?from - location ?to - location)
         :precondition (at ?d ?from)
@@ -40,7 +41,6 @@
             (at ?d ?to)
         )
     )
-
     (:action cargar_dron
         :parameters (?d - dron ?c - caja ?l - location)
         :precondition (and 
@@ -85,7 +85,10 @@
             (not (en-dron ?c ?d))
             (not (cajas-en ?t ?n1))
             (cajas-en ?t ?n2)
-            (en-transportador ?c ?t )
+            (en-transportador ?c ?t)
+            (brazo-libre ?d)
+        
+            
         )
     )
     (:action coger-transportador
@@ -99,6 +102,7 @@
             (not (brazo-libre ?d))
             (not (at ?t ?l))
             (llevado-por ?d ?t)
+            
         )
     )
     (:action dejar-transportador
@@ -111,7 +115,6 @@
             (brazo-libre ?d)
             (not(llevado-por ?d ?t))
             (at ?t ?l)
-
         )
     )
 
@@ -119,15 +122,12 @@
         :parameters (?d - dron ?t - transportador ?from - location ?to - location)
         :precondition (and
             (at ?d ?from)
-            (at ?t ?from)
             (llevado-por ?d ?t)
             
         )
         :effect (and
             (not (at ?d ?from))
             (at ?d ?to)
-            (not (at ?t ?from))
-            (at ?t ?to)
         )
     )
 

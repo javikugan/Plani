@@ -98,11 +98,8 @@ def main():
                       help='el número de cajas disponibles')
     parser.add_option('-g', '--goals', metavar='NUM', type=int, dest='goals',
                       help='el número de metas (asignaciones) a generar')
-    parser.add_option('-k', '--capacity', metavar='NUM', type=int, dest='capacity',
-                      default=2, help='capacidad máxima de cajas por dron (no usado en este dominio, se ignora)')
     parser.add_option('-v', '--verbosity', metavar='LEVEL', type=int, dest='verbosity',
                       default=1, help='nivel de verbosidad: 0=silencioso, 1=normal, 2=debug')
-
 
     (options, args) = parser.parse_args()
 
@@ -198,11 +195,10 @@ def main():
         # Todos los drones en el depósito
         for x in drone:
             f.write(f"    (at {x} deposito)\n")
-            # Cada dron comienza con pinzas libres
             f.write(f"    (left-free {x})\n")
             f.write(f"    (right-free {x})\n")
 
-        # Todas las cajas en ubicaciones aleatorias
+        # Todas las cajas en deposito
         for c in crate:
             loc = crate_locations[c]
             f.write(f"    (at {c} deposito)\n")

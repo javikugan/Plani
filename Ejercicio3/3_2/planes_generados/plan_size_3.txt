@@ -1,25 +1,25 @@
-Number of literals: 72
+Number of literals: 83
 Constructing lookup tables: [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
 Post filtering unreachable actions:  [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
 [01;34mNo analytic limits found, not considering limit effects of goal-only operators[00m
 26% of the ground temporal actions in this problem are compression-safe
-Initial heuristic = 9.000, admissible cost estimate 0.000
+Initial heuristic = 10.000, admissible cost estimate 0.000
 
 Resorting to best-first search
 Running WA* with W = 5.000, not restarting with goal states
-b (8.000 | 227.001)b (7.000 | 228.002)b (6.000 | 228.002)b (5.000 | 228.002)b (4.000 | 454.003)b (3.000 | 681.004)b (2.000 | 682.005)b (1.000 | 682.006)(G);;;; Solution Found
-; States evaluated: 481
-; Cost: 908.007
-; Time 0.47
-0.000: (cargar-dron dron1 crate2 deposito)  [1.000]
-0.000: (cargar-dron dron2 crate3 deposito)  [1.000]
-1.001: (mover-dron dron1 deposito loc3)  [226.000]
-1.001: (mover-dron dron2 deposito loc3)  [226.000]
-227.002: (entregar person1 crate3 medicina loc3 dron2)  [1.000]
-227.002: (entregar person2 crate2 comida loc3 dron1)  [1.000]
-228.003: (mover-dron dron2 loc3 deposito)  [226.000]
-228.003: (mover-dron dron1 loc3 deposito)  [226.000]
-454.004: (cargar-dron dron2 crate1 deposito)  [1.000]
-455.005: (mover-dron dron2 deposito loc3)  [226.000]
-681.006: (entregar person1 crate1 comida loc3 dron2)  [1.000]
-682.007: (mover-dron dron2 loc3 deposito)  [226.000]
+b (9.000 | 127.002)b (8.000 | 127.002)b (7.000 | 252.003)b (6.000 | 252.003)b (5.000 | 252.003)b (4.000 | 252.003)b (3.000 | 304.003)b (2.000 | 304.003)b (1.000 | 304.003)(G);;;; Solution Found
+; States evaluated: 2526
+; Cost: 304.003
+; Time 2.55
+0.000: (cargar-dron dron1 crate1 deposito)  [1.000]
+0.000: (cargar-dron dron3 crate3 deposito)  [1.000]
+0.000: (cargar-dron dron2 crate2 deposito)  [1.000]
+1.001: (mover-dron dron1 deposito loc2)  [125.000]
+1.001: (mover-dron dron2 deposito loc3)  [151.000]
+1.001: (mover-dron dron3 deposito loc2)  [125.000]
+126.002: (entregar person3 crate1 comida loc2 dron1)  [1.000]
+126.002: (entregar person3 crate3 medicina loc2 dron3)  [1.000]
+127.003: (mover-dron dron1 loc2 deposito)  [125.000]
+127.003: (mover-dron dron3 loc2 deposito)  [125.000]
+152.002: (entregar person2 crate2 medicina loc3 dron2)  [1.000]
+153.003: (mover-dron dron2 loc3 deposito)  [151.000]

@@ -235,31 +235,31 @@ def main():
 
         # ---- init ----
         f.write("  (:init\n")
-        # 6.1 All drones start at the depot
+        # Drones en depósito
         for d in drone:
             f.write(f"    (at {d} deposito)\n")
 
-        # 6.2 All carriers start at the depot (if carriers > 0)
+        # Carriers en depósito
         for c in carrier:
             f.write(f"    (at {c} deposito)\n")
 
-        # 6.3 All crates are at their randomly assigned locations
+        # Cajas en depósito
         for c in crate:
             loc = "deposito"
             f.write(f"    (at {c} {loc})\n")
 
-        # 6.4 Relate each crate to its content
+        # Caja con su contenido
         for idx, crates_of_type in enumerate(crates_with_contents):
             cont = content_types[idx]
             for c in crates_of_type:
                 f.write(f"    (contenido-caja {c} {cont})\n")
 
-        # 6.5 All persons are at their randomly assigned locations
+        # Personas en ubicaciones aleatorias
         for p in person:
             loc = person_locations[p]
             f.write(f"    (at {p} {loc})\n")
 
-        # 6.6 Each person’s needs
+        # Necesidades de cada persona
         for pi in range(options.persons):
             for ci in range(len(content_types)):
                 if need[pi][ci]:
@@ -267,11 +267,11 @@ def main():
                     content_name = content_types[ci]
                     f.write(f"    (person-needs {person_name} {content_name})\n")
         vprint(1, f"debug: person needs: {need}")
-        # 6.7 Numerical helpers: linking n0→n1, n1→n2, … up to capacity
+        # Drones tienen brazo libres
         for d in drone:
             f.write(f"    (brazo-libre {d})\n")
             
-        # 6.8 Numérico para transportadores: n0→n1 … →nK, están vacíos y fijamos capacidad
+        # Numeros para los transportadores
         for t in carrier:
             for i in range(options.carrier_capacity):
                 f.write(f"    (siguiente-t {t} n{i} n{i+1})\n")
@@ -283,11 +283,11 @@ def main():
 
         # ---- goals ----
         f.write("  (:goal (and\n")
-        # 7.1 All drones must end up at the depot
+        # Dronesen el depósito
         for d in drone:
             f.write(f"    (at {d} deposito)\n")
 
-        # 7.2 Each person must have received one crate of each content they need
+        # Personas Tienen Cajas
         for pi in range(options.persons):
             for ci in range(len(content_types)):
                 if need[pi][ci]:

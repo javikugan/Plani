@@ -2,20 +2,32 @@ Number of literals: 54
 Constructing lookup tables: [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
 Post filtering unreachable actions:  [10%] [20%] [30%] [40%] [50%] [60%] [70%] [80%] [90%] [100%]
 [01;34mNo analytic limits found, not considering limit effects of goal-only operators[00m
-30% of the ground temporal actions in this problem are compression-safe
-Initial heuristic = 7.000, admissible cost estimate 0.000
+25% of the ground temporal actions in this problem are compression-safe
+Initial heuristic = 8.000, admissible cost estimate 0.000
 
 Resorting to best-first search
 Running WA* with W = 5.000, not restarting with goal states
-b (6.000 | 89.001)b (5.000 | 90.002)b (5.000 | 90.001)b (4.000 | 90.002)b (3.000 | 178.003)b (2.000 | 178.003)b (1.000 | 178.003)(G);;;; Solution Found
-; States evaluated: 203
-; Cost: 178.003
-; Time 0.12
+b (7.000 | 1000002.003)b (6.000 | 401.008)b (5.000 | 402.009)b (4.000 | 402.009)b (3.000 | 402.009)b (2.000 | 402.009)b (1.000 | 403.009)(G);;;; Solution Found
+; States evaluated: 9055
+; Cost: 404.011
+; Time 7.11
 0.000: (cargar-dron dron1 crate1 deposito)  [1.000]
-0.000: (cargar-dron dron2 crate2 deposito)  [1.000]
-1.001: (mover-dron dron1 deposito loc2)  [88.000]
-1.001: (mover-dron dron2 deposito loc2)  [88.000]
-89.002: (entregar person1 crate1 comida loc2 dron1)  [1.000]
-89.002: (entregar person1 crate2 medicina loc2 dron2)  [1.000]
-90.003: (mover-dron dron1 loc2 deposito)  [88.000]
-90.003: (mover-dron dron2 loc2 deposito)  [88.000]
+1.001: (poner-caja-en-transportador dron1 carrier1 crate1 deposito n0 n1)  [1.000]
+2.002: (coger-transportador dron2 carrier1 deposito)  [1.000]
+2.002: (cargar-dron dron1 crate2 deposito)  [1.000]
+3.003: (mover-transportador dron2 carrier1 deposito loc2)  [197.000]
+3.003: (poner-caja-en-transportador dron1 carrier2 crate2 deposito n0 n1)  [1.000]
+4.004: (coger-transportador dron1 carrier2 deposito)  [1.000]
+5.005: (mover-transportador dron1 carrier2 deposito loc2)  [197.000]
+200.004: (dejar-transportador dron2 carrier1 loc2)  [1.000]
+201.005: (sacar-caja-del-transportador dron2 carrier1 crate1 loc2 n0 n1)  [1.000]
+202.006: (entregar person2 crate1 comida loc2 dron2)  [1.000]
+202.006: (dejar-transportador dron1 carrier2 loc2)  [1.000]
+203.007: (coger-transportador dron2 carrier1 loc2)  [1.000]
+203.007: (sacar-caja-del-transportador dron1 carrier2 crate2 loc2 n0 n1)  [1.000]
+204.008: (mover-transportador dron2 carrier1 loc2 deposito)  [197.000]
+204.008: (entregar person2 crate2 medicina loc2 dron1)  [1.000]
+205.009: (coger-transportador dron1 carrier2 loc2)  [1.000]
+206.010: (mover-transportador dron1 carrier2 loc2 deposito)  [197.000]
+401.009: (dejar-transportador dron2 carrier1 deposito)  [1.000]
+403.011: (dejar-transportador dron1 carrier2 deposito)  [1.000]

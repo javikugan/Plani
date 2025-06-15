@@ -152,14 +152,15 @@
         (en-dron ?c ?d)
         (at ?d ?l)
         (at ?p ?l)
+        (persona-libre  ?p)
       ))
       (over all (and
-        (person-needs ?p ?t)
         (contenido-caja ?c ?t)
       ))
     )
     :effect (and
       (at start (and
+        (not (persona-libre  ?p))
         (not (dron-libre ?d))
       ))
       (at end (and
@@ -168,6 +169,7 @@
         (brazo-libre ?d)
         (not (en-dron ?c ?d))
         (dron-libre ?d)
+        (persona-libre  ?p)
       ))
     )
   )
